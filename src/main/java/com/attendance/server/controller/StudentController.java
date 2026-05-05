@@ -1,4 +1,4 @@
-package com.attendance.server.contoller;
+package com.attendance.server.controller;
 
 import com.attendance.server.service.AttendanceService;
 import com.attendance.server.service.StudentService;

@@ -21,7 +21,7 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     // Spring's built-in password scrambler
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // DTO (Data Transfer Object) for receiving login data
     public static class LoginRequest {
@@ -42,11 +42,28 @@ public class AuthController {
 
         // 2. Check if passwords match (In a real app, the DB password would be BCrypt hashed)
         // For testing right now, we will just compare them directly or use encoder.matches()
-        if (!request.password.equals(student.getPassword())) {
+        if (!passwordEncoder.matches(request.password, student.getPassword())) {
             throw new RuntimeException("Wrong password!");
         }
 
         // 3. Success! Print the passport (Generate JWT)
         return jwtUtil.generateToken(student.getEmail());
+    }
+    @PostMapping("/register")
+    public String register(@RequestBody Student newStudent) {
+        // 1. Check if the email is already taken
+        if (studentRepository.findByEmail(newStudent.getEmail()).isPresent()) {
+            throw new RuntimeException("Email is already registered!");
+        }
+
+        // 2. Scramble (Hash) the password
+        String scrambledPassword = passwordEncoder.encode(newStudent.getPassword());
+        newStudent.setPassword(scrambledPassword); // Replace plain text with scrambled text
+
+        // 3. Save to database
+        studentRepository.save(newStudent);
+
+        // 4. Return a success message
+        return "Student registered successfully! You can now login.";
     }
 }

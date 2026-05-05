@@ -21,7 +21,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // Let anyone try to Login/Signup
+                        .requestMatchers("/api/auth/**","/error").permitAll() // Let anyone try to Login/Signup
                         .anyRequest().authenticated() // Protect everything else (like Attendance)
                 )
                 .sessionManagement(session -> session

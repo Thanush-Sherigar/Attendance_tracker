@@ -1,14 +1,11 @@
 package com.attendance.server.repository;
-
-import com.attendance.server.model.AttendanceRecord;
 import com.attendance.server.model.Course;
-import com.attendance.server.model.Student;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AttendanceRecordRepository extends JpaRepository<AttendanceRecord, Long> {
+public interface CourseRepository extends JpaRepository<Course, Long> {
     // Custom query methods can go here later!
-boolean existsByStudentAndCourse(Student student, Course course);
+
 }

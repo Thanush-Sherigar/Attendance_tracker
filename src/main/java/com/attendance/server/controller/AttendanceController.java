@@ -38,7 +38,7 @@ public class AttendanceController {
         String studentEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 
         // Check the 5-minute rule in the Service
-        String result = attendanceService.markAttendance(token);
+        String result = attendanceService.markAttendance(token,studentEmail, sessionRepository.findByToken(token).orElseThrow(()-> new RuntimeException("Invalid token")).getCourse());
 
         return result + " (Scanned by: " + studentEmail + ")";
     }

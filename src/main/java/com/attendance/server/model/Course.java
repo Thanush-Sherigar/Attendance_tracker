@@ -8,14 +8,14 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String code;
+    private String courseName;
+    private String courseCode; // e.g., "CS101"
 
     public Course() {}
 
-    public Course(String name, String code) {
-        this.name = name;
-        this.code = code;
+    public Course(String courseName, String courseCode) {
+        this.courseName = courseName;
+        this.courseCode = courseCode;
     }
 
     public Long getId() {
@@ -27,18 +27,18 @@ public class Course {
     }
 
     public String getName() {
-        return name;
+        return courseName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.courseName = name;
     }
 
     public String getCode() {
-        return code;
+        return courseCode;
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.courseCode = code;
     }
 }

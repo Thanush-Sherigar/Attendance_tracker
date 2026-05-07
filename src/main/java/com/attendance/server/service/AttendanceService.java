@@ -36,7 +36,7 @@ private SessionRepository sessionRepository;
         sessionRepository.deleteAllByCreatedAt(fiveMinutes);
         System.out.println("Cleared teh expired tokens");
     }
-    public String markAttendance(String scannedToken,String studentEmail, Course course){
+    public String markAttendance(String scannedToken,String studentEmail){
         AttendanceSession session= sessionRepository.findByToken(scannedToken).orElseThrow(()-> new RuntimeException("Invalid token"));
         LocalDateTime now= LocalDateTime.now();
         Duration duration= Duration.between(session.getCreatedAt(),now);
@@ -59,7 +59,7 @@ private SessionRepository sessionRepository;
         AttendanceRecord record = new AttendanceRecord(student, sessionCourse, LocalDateTime.now());
         attendanceRepository.save(record);
         
-        return "SUCCESS";
+        return "SUCCESS saved in Attendance_Record";
     }
     public String generateAttendanceToken() {
         return UUID.randomUUID().toString();

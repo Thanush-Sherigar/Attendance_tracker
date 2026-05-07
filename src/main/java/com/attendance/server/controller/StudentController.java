@@ -28,9 +28,4 @@ return studentService.getAllStudents();
     public Student getStudent(@PathVariable Long id){
         return studentService.getStudentById(id);
     }
-    @GetMapping("/attendance")
-    public String getMarkAttendance(){
-        String token= attendanceService.generateAttendanceToken();
-        return attendanceService.markAttendance(token);
-    }
 }

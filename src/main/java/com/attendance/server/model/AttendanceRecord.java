@@ -33,5 +33,7 @@ public class AttendanceRecord {
     public Student getStudent() {return student;}
     public void setStudent(Student student) {this.student=student;}
     public Course getCourse(){return course;}
-    public void setCourse(Course Course){this.course=course;}
+    public void setCourse(Course course){this.course=course;}
+    public LocalDateTime getTimestamp(){return timestamp;}
+    public void setTimestamp(LocalDateTime timestamp){this.timestamp=timestamp;}
 }

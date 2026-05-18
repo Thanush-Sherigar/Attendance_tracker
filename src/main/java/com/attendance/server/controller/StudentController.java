@@ -1,6 +1,4 @@
 package com.attendance.server.controller;
-
-import com.attendance.server.service.AttendanceService;
 import com.attendance.server.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,6 @@ import java.util.List;
 public class StudentController {
     @Autowired
     private StudentService studentService;
-    @Autowired
-    private AttendanceService attendanceService;
     @PostMapping
     public Student createStudent(@Valid @RequestBody Student student){
         return studentService.saveStudent(student);

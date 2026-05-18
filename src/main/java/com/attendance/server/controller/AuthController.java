@@ -4,10 +4,12 @@ import com.attendance.server.model.Student;
 import com.attendance.server.repository.StudentRepository;
 import com.attendance.server.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
@@ -30,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         // 1. Find the student by email
         Optional<Student> studentOpt = studentRepository.findByEmail(request.email);
 
@@ -44,10 +46,12 @@ public class AuthController {
         // For testing right now, we will just compare them directly or use encoder.matches()
         if (!passwordEncoder.matches(request.password, student.getPassword())) {
             throw new RuntimeException("Wrong password!");
-        }
+        }String jwtToken = jwtUtil.generateToken(student.getEmail()); 
 
-        // 3. Success! Print the passport (Generate JWT)
-        return jwtUtil.generateToken(student.getEmail());
+    HashMap<String, String> responseBody = new HashMap<>();
+    responseBody.put("token", jwtToken);
+
+    return ResponseEntity.ok(responseBody);
     }
     @PostMapping("/register")
     public String register(@RequestBody Student newStudent) {

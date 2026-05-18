@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -63,5 +64,8 @@ private SessionRepository sessionRepository;
     }
     public String generateAttendanceToken() {
         return UUID.randomUUID().toString();
+    }
+    public List<AttendanceRecord> getHistoryByEmail(String email) {
+        return attendanceRepository.findByStudentEmail(email);
     }
 }

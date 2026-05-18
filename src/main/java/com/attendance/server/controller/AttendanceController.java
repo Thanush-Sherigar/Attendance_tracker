@@ -1,11 +1,15 @@
 package com.attendance.server.controller;
 
+import com.attendance.server.model.AttendanceRecord;
 import com.attendance.server.model.AttendanceSession;
 import com.attendance.server.repository.SessionRepository;
 import com.attendance.server.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -38,4 +42,12 @@ public class AttendanceController {
         String result = attendanceService.markAttendance(token, studentEmail);
         return result + " (Scanned by: " + studentEmail + ")";
     }
+    @GetMapping("/history")
+public ResponseEntity<List<AttendanceRecord>> getStudentHistory() {
+    // Get the email of the logged-in student from the Security Context
+    String email = SecurityContextHolder.getContext().getAuthentication().getName();
+    
+    List<AttendanceRecord> history = attendanceService.getHistoryByEmail(email);
+    return ResponseEntity.ok(history);
+}
 }
